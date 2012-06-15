@@ -1,8 +1,1 @@
 ftp info:
-ftp: chronotope.org
-u/n: thatcamp@chronotope.org
-pw: thatcamp
-
-wp info:
-u/n: thatcamp2012
-pw: thatcamp2012
