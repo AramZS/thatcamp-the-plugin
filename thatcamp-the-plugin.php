@@ -45,9 +45,13 @@ include 'get-some-tweets.php';
 //Here's the code to set up a menu to control settings. 
 
 function og_additive($content) {
-	if( is_singular() && is_main_query() ) {
+	
+	$postID = get_the_ID();
 
-		$postID = get_the_ID();
+	//And let's get the variable to check against
+	$oguserlink = get_post_meta($postID, 'oglink', true);
+
+	if( is_singular() && is_main_query() && (!empty($oguserlink)) ) {
 
 		add_post_meta($postID, 'opengraph_image_cache', '', true);
 		add_post_meta($postID, 'opengraph_title_cache', '', true);
@@ -68,7 +72,7 @@ function og_additive($content) {
 			die();
 **/	
 		
-		
+
 		if (empty($checkogcache)){
 
 			$page = $oguserlink;
