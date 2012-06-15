@@ -49,11 +49,16 @@ include 'make-menus.php';
 
 function og_additive($content) {
 	
+	//In order to do anything with post_metas we are going to need to get the ID of the post we're working in.
 	$postID = get_the_ID();
 
 	//And let's get the variable to check against
 	$oguserlink = get_post_meta($postID, 'oglink', true);
 
+	//This if checks three things
+	//1. If it is a page or a post (as opposed to within a larger loop)
+	//2. If it is in the primary query on the page. 
+	//3. If the userlink field is empty?
 	if( is_singular() && is_main_query() && (!empty($oguserlink)) ) {
 
 		add_post_meta($postID, 'opengraph_image_cache', '', true);
