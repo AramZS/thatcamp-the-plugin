@@ -1,5 +1,6 @@
 ftp info:
-u/n: thatcamp@chonotope.org
+ftp: chronotope.org
+u/n: thatcamp@chronotope.org
 pw: thatcamp
 
 wp info:
