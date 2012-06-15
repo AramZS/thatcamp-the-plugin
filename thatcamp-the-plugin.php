@@ -30,6 +30,7 @@ License: GPL2
 //	print_r($troubleVariable); 
 //	die();
 
+//This adds the library we're going to use to pull and parse Open Graph data from a page. 
 require_once("OpenGraph.php");
 
 //Here's the function to set up the input boxes on your post screen. 
@@ -37,6 +38,9 @@ include 'generate-the-meta-boxes.php';
 
 //We're going to store the set_me_as_featured() function in this external file. 
 include 'set-me-as-featured-file.php';
+
+//Here's where we will pull in the function to pull relevent tweets, called get_some_link_relevent_tweets().
+include 'get-some-tweets.php';
 
 //Here's the code to set up a menu to control settings. 
 
@@ -120,10 +124,35 @@ function og_additive($content) {
 		
 		
 		
+		$ogCacheImg = get_post_meta($postID, 'opengraph_image_cache', true);
 		$ogTitle = get_post_meta($postID, 'opengraph_title_cache', true);
 		$ogDescrip = get_post_meta($postID, 'opengraph_descrip_cache', true);
 		
-		if (!$ogImage != ''){
+		//Let's get the current WordPress version. We'll need it later. 
+		$wpver = get_bloginfo('version');
+		
+		//Once again, we are going to need to know what version WP is
+		//in order to know how to tream the output of get_some_link_relevent_tweets
+		//More info on this in get-some-tweets.php, line 65.
+		$wpver = get_bloginfo('version');
+		$floatWPVer = floatval($wpver);
+		
+		get_some_link_relevent_tweets($postID, $oguserlink);
+		$tweetone = get_post_meta($postID, 'related_tweet_one', true);
+		$tweettwo = get_post_meta($postID, 'related_tweet_two', true);
+		
+		if ($floatWPVer >= 3.4){
+		
+			//This calls WordPress's open embed function in order to feed it the Twitter links.
+			//Then stores the generated embed code back in the needed variables.
+			//If you want it anything other than the default width of your content.
+			//You'll need to send some args here, see http://codex.wordpress.org/Embeds
+			$tweetone = wp_oembed_get($tweetone);
+			$tweettwo = wp_oembed_get($tweettwo);
+
+		}
+		
+		if (!empty($ogCacheImg)){
 			set_me_as_featured($postID, $ogCacheImg, $ogTitle);
 		}
 
@@ -135,7 +164,12 @@ function og_additive($content) {
 			<div class="oglinkcontent">
 				<h4><a href="' . $oguserlink . '" title="' . $ogTitle . '">' . $ogTitle . '</a></h4>
 				<p>' . $ogDescrip . '</p>
-			</div>';
+			</div>
+			<div class="og-related-tweets">
+			' . $tweetone . '
+			' . $tweettwo . '
+			</div>
+		</div>';
 			
 		$content .= $new_content;	
 	}	
