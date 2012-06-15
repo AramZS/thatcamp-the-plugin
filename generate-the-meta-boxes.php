@@ -11,13 +11,11 @@ $og_link_new_meta_box =
 			"description" => "Add a link to the webpage you want Open Graph data from."
 			),
 //You can add more fields to this box just by adding to the array.
-/**
-		"moremeta" => array(
-			"name" => "moremeta",
+		"seotitle" => array(
+			"name" => "ogposttitle",
 			"std" => "",
-			"description" => "More Meta."
+			"description" => "OG Post Title."
 			)
-**/
 	);
 
 function og_link_new_meta_boxes() {
@@ -40,7 +38,7 @@ function og_link_new_meta_boxes() {
 
 function og_link_create_meta_box() {
 	if ( function_exists('add_meta_box') ) {
-		add_meta_box( 'og_link_new_meta_box', 'Open Graph Link', 'og_link_new_meta_boxes', 'post', 'normal', 'high' );
+		add_meta_box( 'og_link_new_meta_box', 'Open Graph Link and More', 'og_link_new_meta_boxes', 'post', 'normal', 'high' );
 	}
 }
 
