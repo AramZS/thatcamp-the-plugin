@@ -27,6 +27,10 @@ License: GPL2
 */
 
 //Remember, if it works here, it'll work in functions.php for your theme and vice versa.
+/* Additional important reference material 
+	http://codex.wordpress.org/
+	http://www.php.net/manual/en/
+*/
 
 //use this for testing when things go wrong:
 //	print_r($troubleVariable); 
